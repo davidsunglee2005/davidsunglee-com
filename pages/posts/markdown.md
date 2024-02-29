@@ -48,7 +48,7 @@ Ordered
 
 Inline `code`
 
-```
+```js
 export default function Nextra({ Component, pageProps }) {
   return (
     <>
@@ -94,6 +94,6 @@ export default function Nextra({ Component, pageProps }) {
 
 [^1]: Footnote **can have markup**
 
-and multiple paragraphs.
+    and multiple paragraphs.
 
 [^2]: Footnote text.

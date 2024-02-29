@@ -52,8 +52,21 @@ details summary {
   cursor: pointer;
 }
 
+img.head-shot {
+  margin-top: 0;
+  margin-bottom: 16px;
+  margin-left: 16px;
+  margin-right: 0;
+  float: right;
+}
+
 img.next-image {
   margin: 0;
+}
+
+span.dates-worked {
+  float: right;
+  font-size: smaller;
 }
 
 .prose a {

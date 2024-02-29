@@ -8,11 +8,11 @@ author: You
 
 # Next.js Pages
 
-In Next.js, a **page** is a [React Component](https://react.dev/reference/react/Component) exported from a `.js`, `.jsx`, `.ts`, or `.tsx` file in the `pages` directory. Each page is associated with a route based on its file name.
+In Next.js, a **page** is a [React Component](https://reactjs.org/docs/components-and-props.html) exported from a `.js`, `.jsx`, `.ts`, or `.tsx` file in the `pages` directory. Each page is associated with a route based on its file name.
 
 **Example**: If you create `pages/about.js` that exports a React component like below, it will be accessible at `/about`.
 
-```
+```js
 function About() {
   return <div>About</div>
 }
@@ -43,7 +43,7 @@ Importantly, Next.js lets you **choose** which pre-rendering form you'd like to 
 
 We **recommend** using **Static Generation** over Server-side Rendering for performance reasons. Statically generated pages can be cached by CDN with no extra configuration to boost performance. However, in some cases, Server-side Rendering might be the only option.
 
-You can also use **Client-side Rendering** along with Static Generation or Server-side Rendering. That means some parts of a page can be rendered entirely by client side JavaScript. To learn more, take a look at the [Data Fetching](/docs/basic-features/data-fetching/client-side.md) documentation.
+You can also use **Client-side Rendering** along with Static Generation or Server-side Rendering. That means some parts of a page can be rendered entirely by client side JavaScript. To learn more, take a look at the [Data Fetching](/docs/basic-features/data-fetching.md#fetching-data-on-the-client-side) documentation.
 
 ## Static Generation (Recommended)
 
@@ -55,7 +55,7 @@ In Next.js, you can statically generate pages **with or without data**. Let's ta
 
 By default, Next.js pre-renders pages using Static Generation without fetching data. Here's an example:
 
-```
+```js
 function About() {
   return <div>About</div>
 }
@@ -76,7 +76,7 @@ Some pages require fetching external data for pre-rendering. There are two scena
 
 **Example**: Your blog page might need to fetch the list of blog posts from a CMS (content management system).
 
-```
+```js
 // TODO: Need to fetch `posts` (by calling some API endpoint)
 //       before this page can be pre-rendered.
 function Blog({ posts }) {
@@ -94,7 +94,7 @@ export default Blog
 
 To fetch this data on pre-render, Next.js allows you to `export` an `async` function called `getStaticProps` from the same file. This function gets called at build time and lets you pass fetched data to the page's `props` on pre-render.
 
-```
+```js
 function Blog({ posts }) {
   // Render posts...
 }
@@ -117,7 +117,7 @@ export async function getStaticProps() {
 export default Blog
 ```
 
-To learn more about how `getStaticProps` works, check out the [Data Fetching documentation](/docs/basic-features/data-fetching/get-static-props.md).
+To learn more about how `getStaticProps` works, check out the [Data Fetching documentation](/docs/basic-features/data-fetching.md#getstaticprops-static-generation).
 
 #### Scenario 2: Your page paths depend on external data
 
@@ -133,7 +133,7 @@ Later, you might add the second post with `id: 2`. Then you'd want to pre-render
 
 So your page **paths** that are pre-rendered depend on external data**.** To handle this, Next.js lets you `export` an `async` function called `getStaticPaths` from a dynamic page (`pages/posts/[id].js` in this case). This function gets called at build time and lets you specify which paths you want to pre-render.
 
-```
+```js
 // This function gets called at build time
 export async function getStaticPaths() {
   // Call an external API endpoint to get posts
@@ -153,7 +153,7 @@ export async function getStaticPaths() {
 
 Also in `pages/posts/[id].js`, you need to export `getStaticProps` so that you can fetch the data about the post with this `id` and use it to pre-render the page:
 
-```
+```js
 function Post({ post }) {
   // Render post...
 }
@@ -176,7 +176,7 @@ export async function getStaticProps({ params }) {
 export default Post
 ```
 
-To learn more about how `getStaticPaths` works, check out the [Data Fetching documentation](/docs/basic-features/data-fetching/get-static-paths.md).
+To learn more about how `getStaticPaths` works, check out the [Data Fetching documentation](/docs/basic-features/data-fetching.md#getstaticpaths-static-generation).
 
 ### When should I use Static Generation?
 
@@ -195,7 +195,7 @@ On the other hand, Static Generation is **not** a good idea if you cannot pre-re
 
 In cases like this, you can do one of the following:
 
-- Use Static Generation with **Client-side Rendering:** You can skip pre-rendering some parts of a page and then use client-side JavaScript to populate them. To learn more about this approach, check out the [Data Fetching documentation](/docs/basic-features/data-fetching/client-side.md).
+- Use Static Generation with **Client-side Rendering:** You can skip pre-rendering some parts of a page and then use client-side JavaScript to populate them. To learn more about this approach, check out the [Data Fetching documentation](/docs/basic-features/data-fetching.md#fetching-data-on-the-client-side).
 - Use **Server-Side Rendering:** Next.js pre-renders a page on each request. It will be slower because the page cannot be cached by a CDN, but the pre-rendered page will always be up-to-date. We'll talk about this approach below.
 
 ## Server-side Rendering
@@ -208,7 +208,7 @@ To use Server-side Rendering for a page, you need to `export` an `async` functio
 
 For example, suppose that your page needs to pre-render frequently updated data (fetched from an external API). You can write `getServerSideProps` which fetches this data and passes it to `Page` like below:
 
-```
+```js
 function Page({ data }) {
   // Render data...
 }
@@ -228,7 +228,7 @@ export default Page
 
 As you can see, `getServerSideProps` is similar to `getStaticProps`, but the difference is that `getServerSideProps` is run on every request instead of on build time.
 
-To learn more about how `getServerSideProps` works, check out our [Data Fetching documentation](/docs/basic-features/data-fetching/get-server-side-props.md)
+To learn more about how `getServerSideProps` works, check out our [Data Fetching documentation](/docs/basic-features/data-fetching.md#getserversideprops-server-side-rendering)
 
 ## Summary
 
